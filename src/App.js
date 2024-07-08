@@ -1,21 +1,17 @@
-import { useState } from "react";
 import NewTodo from "./components/NewTodo";
 import TodoList from "./components/TodoList";
 import Header from "./components/Header";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [listOfTodos, setListOfTodos] = useState([]);
-
-  const addTodoHandler = (value) => {
-    setListOfTodos((prevState) => [...prevState, value]);
-  };
+  const listOfTodos = useSelector((state) => state.todo.tasks);
 
   return (
     <Box sx={{ margin: "2rem 0 auto" }}>
       <Header />
-      <NewTodo onAddTodo={addTodoHandler} />
-      <TodoList list={listOfTodos} />;
+      <NewTodo />
+      <TodoList list={listOfTodos} />
     </Box>
   );
 }

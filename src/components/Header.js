@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
-import { modalActions } from "../store";
 import { useDispatch } from "react-redux";
+import { modalActions } from "../store/modal";
 
 function Header() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function Header() {
       <Button variant="contained" color="secondary" onClick={newTask}>
         New Task
       </Button>
-    </div> 
+    </div>
   );
 }
 

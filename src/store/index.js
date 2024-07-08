@@ -1,20 +1,9 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-
-const initialState = { isOpen: false };
-
-const modalSlice = createSlice({
-  name: "modal",
-  initialState,
-  reducers: {
-    toggleShowModal: (state) => {
-      state.isOpen = !state.isOpen;
-    },
-  },
-});
+import { configureStore } from "@reduxjs/toolkit";
+import modalReducer from "./modal";
+import todoReducer from "./todos";
 
 const store = configureStore({
-  reducer: { modal: modalSlice.reducer },
+  reducer: { modal: modalReducer, todo: todoReducer },
 });
 
-export const modalActions = modalSlice.actions;
 export default store;

@@ -2,9 +2,10 @@ import { useRef } from "react";
 // import classes from "./NewTodo.module.css";
 import { Box, Button, Input, Modal, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { modalActions } from "../store";
+import { todoActions } from "../store/todos";
+import { modalActions } from "../store/modal";
 
-function NewTodo({ onAddTodo }) {
+function NewTodo() {
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.isOpen);
 
@@ -12,11 +13,14 @@ function NewTodo({ onAddTodo }) {
   const descriptionRef = useRef();
 
   const newTodoHandler = () => {
-    onAddTodo({
-      title: inputRef.current.value,
-      description: descriptionRef.current.value,
-      status: "In Process",
-    });
+    dispatch(
+      todoActions.addToList({
+        title: inputRef.current.value,
+        description: descriptionRef.current.value,
+        status: "In Process",
+      })
+    );
+
     inputRef.current.value = "";
     descriptionRef.current.value = "";
     handleClose();
