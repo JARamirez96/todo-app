@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import NewTodo from "./components/NewTodo";
+import TodoList from "./components/TodoList";
+import Header from "./components/Header";
+import { Box } from "@mui/material";
 
 function App() {
+  const [listOfTodos, setListOfTodos] = useState([]);
+
+  const addTodoHandler = (value) => {
+    setListOfTodos((prevState) => [...prevState, value]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ margin: "2rem 0 auto" }}>
+      <Header />
+      <NewTodo onAddTodo={addTodoHandler} />
+      <TodoList list={listOfTodos} />;
+    </Box>
   );
 }
 

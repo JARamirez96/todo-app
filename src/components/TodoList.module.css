@@ -1,0 +1,11 @@
+.list {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: auto;
+    width: 40rem;
+}
+
+.list li {
+    margin: 1rem auto;
+}

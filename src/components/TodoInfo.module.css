@@ -1,0 +1,32 @@
+.todo {
+    background-color: rgb(50, 50, 120);
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 0;
+}
+
+.imageSection {
+    margin: auto;
+}
+
+.infoSection {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoSection p {
+    margin: 0;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-content: end;
+    justify-content: space-around;
+}
+
+.completed {
+    color: #24bc24;
+}
