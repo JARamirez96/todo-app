@@ -16,7 +16,7 @@ function Header() {
       <Button variant="contained" color="secondary" onClick={newTask}>
         New Task
       </Button>
-    </div>
+    </div> 
   );
 }
 
