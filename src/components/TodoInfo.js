@@ -5,11 +5,11 @@ const style = {
   border: "1px solid white",
   borderRadius: "5px",
   maxHeight: "5rem",
-  width: "5rem",
+  width: "10rem",
   height: "100vh",
 };
 
-function TodoInfo({ title, status, description }) {
+function TodoInfo({ title, status, date, description }) {
   return (
     <li className={classes.todo}>
       <Box sx={{ padding: "0 1rem" }}>
@@ -17,21 +17,20 @@ function TodoInfo({ title, status, description }) {
           <div className={classes.imageSection}>
             <Box sx={style}>Image</Box>
           </div>
-          <Box className={classes.infoSection}>
-            <p className={classes.title}>
-              Title: <span>{title}</span>
-            </p>
-            <p>
-              Status: <span>{status}</span>
-            </p>
-            <p>
-              Date: <span>01/12/2024</span>
-            </p>
+          <Box gap={1} className={classes.infoSection}>
+            <div className={classes.infoHeader}>
+              <span>{title}</span>
+              <span>{status}</span>
+            </div>
+            <span>{date}</span>
+            {description !== "" && <span>Additional Notes</span>}
           </Box>
         </header>
-        <Typography margin={1} variant="body2" align="justify">
-          {description}
-        </Typography>
+        {description !== "" && (
+          <Typography sx={{ marginTop: "10px" }} variant="body2" align="justify">
+            {description}
+          </Typography>
+        )}
       </Box>
     </li>
   );

@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import TodoInfo from "./TodoInfo";
 import classes from "./TodoList.module.css";
 
@@ -5,7 +6,9 @@ function TodoList({ list }) {
   return (
     <div>
       {list.length === 0 && (
-        <p>The List of Todos is empty. Please add a new one.</p>
+        <Typography color={{ color: "white" }}>
+          The List of Todos is empty. Please add a new one.
+        </Typography>
       )}
       {list.length > 0 && (
         <ul className={classes.list}>

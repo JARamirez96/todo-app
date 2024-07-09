@@ -8,7 +8,7 @@ function App() {
   const listOfTodos = useSelector((state) => state.todo.tasks);
 
   return (
-    <Box sx={{ margin: "2rem 0 auto" }}>
+    <Box sx={{ margin: "2rem auto auto", width:"50rem" }}>
       <Header />
       <NewTodo />
       <TodoList list={listOfTodos} />

@@ -6,27 +6,23 @@
     padding: 10px 0;
 }
 
+.header {
+    display: flex;
+}
+
 .imageSection {
     margin: auto;
 }
 
 .infoSection {
-    width: 30rem;
+    width: 27rem;
     display: flex;
     flex-direction: column;
+    text-align: left;
 }
 
-.infoSection p {
-    margin: 0;
-}
-
-.header {
+.infoHeader {
     width: 100%;
     display: flex;
-    align-content: end;
-    justify-content: space-around;
-}
-
-.completed {
-    color: #24bc24;
+    justify-content: space-between;
 }

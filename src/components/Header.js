@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../store/modal";
 
@@ -13,9 +13,12 @@ function Header() {
       <Typography variant="h3" align="center" style={{ color: "white" }}>
         Todo App
       </Typography>
-      <Button variant="contained" color="secondary" onClick={newTask}>
-        New Task
-      </Button>
+      <hr />
+      <Box textAlign="end">
+        <Button variant="contained" color="secondary" onClick={newTask}>
+          New Task
+        </Button>
+      </Box>
     </div>
   );
 }
