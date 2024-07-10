@@ -1,13 +1,4 @@
-.modal {
-    background-color: white;
-    border-radius: 10px;
+.buttons {
     display: flex;
-    flex-direction: column;
-    width: 30rem;
-    position: relative;
-    top: 5rem;
-}
-
-.modal textarea {
-    resize: none;
+    justify-content: space-between;
 }

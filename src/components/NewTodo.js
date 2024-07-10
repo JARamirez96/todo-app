@@ -1,14 +1,22 @@
-import { useRef } from "react";
-import classes from "./NewTodo.module.css";
-import { Box, Button, Input, Modal, TextField } from "@mui/material";
+import { useRef, useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { todoActions } from "../store/todos";
 import { modalActions } from "../store/modal";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import classes from "./NewTodo.module.css";
 
 function NewTodo() {
+  const [showAlert, setShowAlert] = useState(false);
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.isOpen);
 
@@ -17,25 +25,30 @@ function NewTodo() {
   const dateRef = useRef();
 
   const newTodoHandler = () => {
-    dispatch(
-      todoActions.addToList({
-        title: inputRef.current.value.trim(),
-        description: descriptionRef.current.value.trim(),
-        date: dateRef.current.value,
-        status: "In Process",
-      })
-    );
-    handleClose();
+    if (inputRef.current.value.trim() !== "" && dateRef.current.value !== "") {
+      dispatch(
+        todoActions.addToList({
+          title: inputRef.current.value.trim(),
+          description: descriptionRef.current.value.trim(),
+          date: dateRef.current.value,
+          status: "In Process",
+        })
+      );
+      handleClose();
+    } else {
+      setShowAlert(true);
+    }
   };
 
   const handleClose = () => {
     dispatch(modalActions.toggleShowModal());
+    setShowAlert(false);
   };
 
   return (
     <Modal open={showModal} onClose={handleClose}>
       <Box
-        p={2}
+        p={3}
         gap={3}
         width={400}
         display="flex"
@@ -48,9 +61,11 @@ function NewTodo() {
           top: "7rem",
         }}
       >
-        <Input placeholder="Title" type="text" inputRef={inputRef} />
+        <Typography variant="h4">New Task</Typography>
+        <TextField label="Title" variant="outlined" inputRef={inputRef} />
         <TextField
-          placeholder="Additional Notes"
+          label="Description"
+          variant="outlined"
           inputRef={descriptionRef}
           multiline
           rows={4}
@@ -60,9 +75,30 @@ function NewTodo() {
             <DesktopDatePicker label="Choose Date" inputRef={dateRef} />
           </DemoItem>
         </LocalizationProvider>
-        <Button color="primary" variant="contained" onClick={newTodoHandler}>
-          Add Task
-        </Button>
+        {showAlert && (
+          <Alert variant="outlined" severity="error">
+            The Task must have a Title and Date. Please add the missing
+            information.
+          </Alert>
+        )}
+        <div className={classes.buttons}>
+          <Button
+            sx={{ width: "45%" }}
+            color="error"
+            variant="contained"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{ width: "45%" }}
+            color="primary"
+            variant="contained"
+            onClick={newTodoHandler}
+          >
+            Add Task
+          </Button>
+        </div>
       </Box>
     </Modal>
   );
