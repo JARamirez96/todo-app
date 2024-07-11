@@ -26,8 +26,8 @@ function TodoList() {
       )}
       {list.length > 0 && (
         <ul className={classes.list}>
-          {list.map((todo, index) => (
-            <TodoInfo key={index} {...todo} />
+          {list.map((todo) => (
+            <TodoInfo key={todo.id} {...todo} />
           ))}
         </ul>
       )}

@@ -14,6 +14,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import classes from "./NewTodo.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 function NewTodo() {
   const [showAlert, setShowAlert] = useState(false);
@@ -28,6 +29,7 @@ function NewTodo() {
     if (inputRef.current.value.trim() !== "" && dateRef.current.value !== "") {
       dispatch(
         todoActions.addToList({
+          id: uuidv4(),
           title: inputRef.current.value.trim(),
           description: descriptionRef.current.value.trim(),
           date: dateRef.current.value,

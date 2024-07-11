@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import classes from "./TodoInfo.module.css";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { todoActions } from "../store/todos";
 
 const style = {
   border: "1px solid white",
@@ -11,11 +13,16 @@ const style = {
   height: "100vh",
 };
 
-function TodoInfo({ title, status, date, description }) {
+function TodoInfo({ id, title, status, date, description }) {
+  const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onViewDetails = () => {
     setIsExpanded((prevState) => !prevState);
+  };
+
+  const onChangeStatus = (status) => {
+    dispatch(todoActions.changeStatus({ id, status }));
   };
 
   return (
@@ -30,7 +37,46 @@ function TodoInfo({ title, status, date, description }) {
               <Typography variant="h5">{title}</Typography>
               <Typography variant="body1">{status}</Typography>
             </div>
-            <Typography variant="body1">Complete until {date}</Typography>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              alignItems="center"
+            >
+              <Typography variant="body1">Complete until {date}</Typography>
+              <div>
+                <Stack direction="row" spacing={2}>
+                  {status !== "In Process" && (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="info"
+                      onClick={() => onChangeStatus("In Process")}
+                    >
+                      In Process
+                    </Button>
+                  )}
+                  {status !== "Completed" && (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="success"
+                      onClick={() => onChangeStatus("Completed")}
+                    >
+                      Completed
+                    </Button>
+                  )}
+                  {status !== "Failed" && (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="error"
+                      onClick={() => onChangeStatus("Failed")}
+                    >
+                      Failed
+                    </Button>
+                  )}
+                </Stack>
+              </div>
+            </Box>
           </Box>
         </header>
         {description !== "" && (

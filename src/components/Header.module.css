@@ -6,3 +6,14 @@
 .space {
     width: 1rem;
 }
+
+.status {
+    cursor: "pointer";
+    color: white;
+    width: 8rem;
+}
+
+.active-tab-indicator {
+    border: 1.5px solid #0f86ef;
+    border-radius: 8px;
+}

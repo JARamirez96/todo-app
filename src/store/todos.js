@@ -14,8 +14,14 @@ const todoSlice = createSlice({
     addToList(state, action) {
       state.tasks = [...state.tasks, action.payload];
     },
+    changeStatus(state, action) {
+      const { id, status } = action.payload;
+      const task = state.tasks.find((task) => task.id === id);
+      if (task) {
+        task.status = status;
+      }
+    },
     // removeFromList(state, action) {},
-    // changeStatus(state, action){}
   },
 });
 
