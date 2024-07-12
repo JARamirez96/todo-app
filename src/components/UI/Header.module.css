@@ -8,12 +8,15 @@
 }
 
 .status {
-    cursor: "pointer";
     color: white;
     width: 8rem;
 }
 
-.active-tab-indicator {
-    border: 1.5px solid #0f86ef;
-    border-radius: 8px;
+.active {
+    border-bottom: 2px solid white;
+}
+
+.inactive {
+    background-color: inherit;
+    height: 1px;
 }

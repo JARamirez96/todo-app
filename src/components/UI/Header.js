@@ -1,13 +1,19 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { modalActions } from "../store/modal";
-import Image from "../assets/appLogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../../store/modal";
+import Image from "../../assets/appLogo.png";
 import classes from "./Header.module.css";
+import { todoActions } from "../../store/todos";
 
 function Header() {
   const dispatch = useDispatch();
+  const activeFilter = useSelector((state) => state.todo.filter);
   const newTask = () => {
     dispatch(modalActions.toggleShowModal());
+  };
+
+  const changeFilterHandler = (filter) => {
+    dispatch(todoActions.listFilter(filter));
   };
 
   const status = ["All Tasks", "In Process", "Completed", "Failed"];
@@ -28,9 +34,23 @@ function Header() {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {status.map((item) => (
-            <Typography key={item} className={classes.status}>
-              {item}
-            </Typography>
+            <div
+              key={item}
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <Typography
+                className={classes.status}
+                onClick={() => changeFilterHandler(item)}
+                sx={{ cursor: "pointer" }}
+              >
+                {item}
+              </Typography>
+              <span
+                className={
+                  item === activeFilter ? classes.active : classes.inactive
+                }
+              ></span>
+            </div>
           ))}
         </Box>
         <Box>

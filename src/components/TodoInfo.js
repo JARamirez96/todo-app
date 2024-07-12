@@ -4,12 +4,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../store/todos";
+import StatusButton from "./Buttons/StatusButton";
+import { Delete as DeleteIcon } from "@mui/icons-material";
 
 const style = {
   border: "1px solid white",
   borderRadius: "5px",
   maxHeight: "5rem",
-  width: "10rem",
+  width: "9rem",
   height: "100vh",
 };
 
@@ -21,21 +23,54 @@ function TodoInfo({ id, title, status, date, description }) {
     setIsExpanded((prevState) => !prevState);
   };
 
-  const onChangeStatus = (status) => {
+  const changeStatusHandler = (status) => {
     dispatch(todoActions.changeStatus({ id, status }));
   };
+
+  const deleteTaskHandler = () => {
+    dispatch(todoActions.removeFromList(id));
+  };
+
+  const statusList = [
+    { status: "In Process", color: "info" },
+    { status: "Completed", color: "success" },
+    { status: "Failed", color: "error" },
+  ];
+
+  function getStatusClass(status) {
+    switch (status) {
+      case "In Process":
+        return classes.in_process;
+      case "Failed":
+        return classes.failed;
+      default:
+        return classes.completed;
+    }
+  }
 
   return (
     <li className={classes.todo}>
       <Box sx={{ padding: "0 1rem" }}>
         <header className={classes.header}>
           <div className={classes.imageSection}>
+            <Box textAlign="start">
+              <Button
+                size="small"
+                color="error"
+                variant="contained"
+                sx={{ width: "1.9rem", minWidth: "0" }}
+                onClick={deleteTaskHandler}
+              >
+                <DeleteIcon />
+              </Button>
+            </Box>
+            <span style={{ width: "1rem" }}></span>
             <Box sx={style}>Image</Box>
           </div>
           <Box gap={1} className={classes.infoSection}>
             <div className={classes.infoHeader}>
               <Typography variant="h5">{title}</Typography>
-              <Typography variant="body1">{status}</Typography>
+              <span className={getStatusClass(status)}>{status}</span>
             </div>
             <Box
               sx={{ display: "flex", justifyContent: "space-between" }}
@@ -44,36 +79,22 @@ function TodoInfo({ id, title, status, date, description }) {
               <Typography variant="body1">Complete until {date}</Typography>
               <div>
                 <Stack direction="row" spacing={2}>
-                  {status !== "In Process" && (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="info"
-                      onClick={() => onChangeStatus("In Process")}
-                    >
-                      In Process
-                    </Button>
-                  )}
-                  {status !== "Completed" && (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="success"
-                      onClick={() => onChangeStatus("Completed")}
-                    >
-                      Completed
-                    </Button>
-                  )}
-                  {status !== "Failed" && (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="error"
-                      onClick={() => onChangeStatus("Failed")}
-                    >
-                      Failed
-                    </Button>
-                  )}
+                  {statusList.map((statusButton) => (
+                    <>
+                      {status !== statusButton.status ? (
+                        <StatusButton
+                          key={statusButton.status + id}
+                          status={statusButton.status}
+                          color={statusButton.color}
+                          onChangeStatus={() =>
+                            changeStatusHandler(statusButton.status)
+                          }
+                        >
+                          {statusButton.status}
+                        </StatusButton>
+                      ) : null}
+                    </>
+                  ))}
                 </Stack>
               </div>
             </Box>

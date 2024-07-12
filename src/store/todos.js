@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialTodoState = {
   tasks: [],
+  filter: "All Tasks",
 };
 
 const todoSlice = createSlice({
@@ -21,7 +22,12 @@ const todoSlice = createSlice({
         task.status = status;
       }
     },
-    // removeFromList(state, action) {},
+    listFilter(state, action) {
+      state.filter = action.payload;
+    },
+    removeFromList(state, action) {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
   },
 });
 

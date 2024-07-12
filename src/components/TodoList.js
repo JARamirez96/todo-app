@@ -4,10 +4,12 @@ import classes from "./TodoList.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { todoActions } from "../store/todos";
+import { useFilteredTasks } from "../hooks/useFilteredTasks";
 
 function TodoList() {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.todo.tasks);
+  const filter = useSelector((state) => state.todo.filter);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("ListOfTodos")) || [];
@@ -17,16 +19,22 @@ function TodoList() {
     localStorage.setItem("ListOfTodos", JSON.stringify(list));
   }, [list, dispatch]);
 
+  const filteredTasks = useFilteredTasks(filter);
+
   return (
     <div>
-      {list.length === 0 && (
-        <Typography variant="h6" color={{ color: "white" }} align="center">
+      {filteredTasks.length === 0 && (
+        <Typography
+          variant="h6"
+          sx={{ color: "white", marginTop: "2rem" }}
+          align="center"
+        >
           The List is empty. Please add a new task.
         </Typography>
       )}
-      {list.length > 0 && (
+      {filteredTasks.length > 0 && (
         <ul className={classes.list}>
-          {list.map((todo) => (
+          {filteredTasks.map((todo) => (
             <TodoInfo key={todo.id} {...todo} />
           ))}
         </ul>

@@ -1,6 +1,6 @@
 import NewTodo from "./components/NewTodo";
 import TodoList from "./components/TodoList";
-import Header from "./components/Header";
+import Header from "./components/UI/Header";
 import { Box } from "@mui/material";
 
 function App() {

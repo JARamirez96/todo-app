@@ -12,6 +12,9 @@
 
 .imageSection {
     margin: auto;
+    display: flex;
+    align-items: flex-start;
+    width: 13rem;
 }
 
 .infoSection {
@@ -25,4 +28,27 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.infoHeader span {
+    font-size: .9rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+    margin: 0;
+    width: 6rem;
+    height: 1.3rem;
+    cursor: default;
+    text-align: center;
+}
+
+.in_process {
+    background-color: rgb(68, 68, 252);
+}
+
+.failed {
+    background-color: red;
+}
+
+.completed {
+    background-color: green;
 }
