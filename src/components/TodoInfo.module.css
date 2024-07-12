@@ -30,7 +30,7 @@
     justify-content: space-between;
 }
 
-.infoHeader span {
+.task_status {
     font-size: .9rem;
     border: 1px solid white;
     border-radius: 1rem;

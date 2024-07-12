@@ -11,7 +11,7 @@ const style = {
   border: "1px solid white",
   borderRadius: "5px",
   maxHeight: "5rem",
-  width: "9rem",
+  width: "10rem",
   height: "100vh",
 };
 
@@ -40,11 +40,11 @@ function TodoInfo({ id, title, status, date, description }) {
   function getStatusClass(status) {
     switch (status) {
       case "In Process":
-        return classes.in_process;
+        return classes.in_process + " " + classes.task_status;
       case "Failed":
-        return classes.failed;
+        return classes.failed + " " + classes.task_status;
       default:
-        return classes.completed;
+        return classes.completed + " " + classes.task_status;
     }
   }
 
@@ -53,30 +53,12 @@ function TodoInfo({ id, title, status, date, description }) {
       <Box sx={{ padding: "0 1rem" }}>
         <header className={classes.header}>
           <div className={classes.imageSection}>
-            <Box textAlign="start">
-              <Button
-                size="small"
-                color="error"
-                variant="contained"
-                sx={{ width: "1.9rem", minWidth: "0" }}
-                onClick={deleteTaskHandler}
-              >
-                <DeleteIcon />
-              </Button>
-            </Box>
             <span style={{ width: "1rem" }}></span>
             <Box sx={style}>Image</Box>
           </div>
           <Box gap={1} className={classes.infoSection}>
             <div className={classes.infoHeader}>
               <Typography variant="h5">{title}</Typography>
-              <span className={getStatusClass(status)}>{status}</span>
-            </div>
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between" }}
-              alignItems="center"
-            >
-              <Typography variant="body1">Complete until {date}</Typography>
               <div>
                 <Stack direction="row" spacing={2}>
                   {statusList.map((statusButton) => (
@@ -97,6 +79,26 @@ function TodoInfo({ id, title, status, date, description }) {
                   ))}
                 </Stack>
               </div>
+            </div>
+
+            <span id="task_status" className={getStatusClass(status)}>
+              {status}
+            </span>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              alignItems="center"
+            >
+              <Typography variant="body1">Complete until {date}</Typography>
+              <Box>
+                <Button
+                  size="small"
+                  color="error"
+                  variant="contained"
+                  onClick={deleteTaskHandler}
+                >
+                  <DeleteIcon /> Delete Task
+                </Button>
+              </Box>
             </Box>
           </Box>
         </header>
@@ -116,7 +118,7 @@ function TodoInfo({ id, title, status, date, description }) {
               </motion.span>
             </Typography>
             {isExpanded && (
-              <Typography variant="body2" align="justify">
+              <Typography mt={1} variant="body2" align="justify">
                 {description}
               </Typography>
             )}
