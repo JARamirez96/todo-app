@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { todoActions } from "../store/todos";
 import { useFilteredTasks } from "../hooks/useFilteredTasks";
+import { AnimatePresence, motion } from "framer-motion";
 
 function TodoList() {
   const dispatch = useDispatch();
@@ -16,28 +17,33 @@ function TodoList() {
     if (storedTasks.length > 0 && list.length === 0) {
       dispatch(todoActions.loadTasks(storedTasks));
     }
-    localStorage.setItem("ListOfTodos", JSON.stringify(list));
+
+    if (list.length > 0) {
+      localStorage.setItem("ListOfTodos", JSON.stringify(list));
+    } else {
+      localStorage.removeItem("ListOfTodos");
+    }
   }, [list, dispatch]);
 
-  const filteredTasks = useFilteredTasks(filter);
+  const { filteredTasks } = useFilteredTasks(filter);
 
   return (
     <div>
       {filteredTasks.length === 0 && (
-        <Typography
-          variant="h6"
-          sx={{ color: "white", marginTop: "2rem" }}
-          align="center"
-        >
-          The List is empty. Please add a new task.
+        <Typography variant="h6" mt={4} color="white" align="center">
+          {filter === "All Tasks"
+            ? `The List is empty. Please add a new task.`
+            : `There are no tasks that have the status ${filter}`}
         </Typography>
       )}
       {filteredTasks.length > 0 && (
-        <ul className={classes.list}>
-          {filteredTasks.map((todo) => (
-            <TodoInfo key={todo.id} {...todo} />
-          ))}
-        </ul>
+        <motion.ul className={classes.list}>
+          <AnimatePresence>
+            {filteredTasks.map((todo) => (
+              <TodoInfo key={todo.id} {...todo} />
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       )}
     </div>
   );

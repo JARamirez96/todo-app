@@ -1,21 +1,18 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import classes from "./TodoInfo.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../store/todos";
 import StatusButton from "./Buttons/StatusButton";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 
-const style = {
-  border: "1px solid white",
-  borderRadius: "5px",
-  maxHeight: "5rem",
-  width: "10rem",
-  height: "100vh",
+const itemVariants = {
+  hidden: { opacity: 0, x: 15 },
+  visible: { opacity: 1, x: 0 },
 };
 
-function TodoInfo({ id, title, status, date, description }) {
+function TodoInfo({ id, title, status, date, image, description }) {
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -40,32 +37,37 @@ function TodoInfo({ id, title, status, date, description }) {
   function getStatusClass(status) {
     switch (status) {
       case "In Process":
-        return classes.in_process + " " + classes.task_status;
+        return classes.in_process;
       case "Failed":
-        return classes.failed + " " + classes.task_status;
+        return classes.failed;
       default:
-        return classes.completed + " " + classes.task_status;
+        return classes.completed;
     }
   }
 
   return (
-    <li className={classes.todo}>
+    <motion.li
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 0.5 }}
+      className={classes.todo}
+      key={id}
+    >
       <Box sx={{ padding: "0 1rem" }}>
         <header className={classes.header}>
           <div className={classes.imageSection}>
-            <span style={{ width: "1rem" }}></span>
-            <Box sx={style}>Image</Box>
+            <img src={image.src} height="100" alt="task_image" />
           </div>
           <Box gap={1} className={classes.infoSection}>
             <div className={classes.infoHeader}>
-              <Typography variant="h5">{title}</Typography>
+              <Typography variant="h6">{title}</Typography>
               <div>
                 <Stack direction="row" spacing={2}>
                   {statusList.map((statusButton) => (
-                    <>
+                    <React.Fragment key={statusButton.status + id}>
                       {status !== statusButton.status ? (
                         <StatusButton
-                          key={statusButton.status + id}
                           status={statusButton.status}
                           color={statusButton.color}
                           onChangeStatus={() =>
@@ -75,13 +77,16 @@ function TodoInfo({ id, title, status, date, description }) {
                           {statusButton.status}
                         </StatusButton>
                       ) : null}
-                    </>
+                    </React.Fragment>
                   ))}
                 </Stack>
               </div>
             </div>
 
-            <span id="task_status" className={getStatusClass(status)}>
+            <span
+              id="task_status"
+              className={getStatusClass(status) + " " + classes.task_status}
+            >
               {status}
             </span>
             <Box
@@ -125,7 +130,7 @@ function TodoInfo({ id, title, status, date, description }) {
           </>
         )}
       </Box>
-    </li>
+    </motion.li>
   );
 }
 

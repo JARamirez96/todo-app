@@ -9,7 +9,15 @@
 
 .status {
     color: white;
-    width: 8rem;
+}
+
+.totalFilter {
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    background-color: rgb(0, 0, 255);
+    border-radius: 30%;
+    padding: 5px 8px;
 }
 
 .active {

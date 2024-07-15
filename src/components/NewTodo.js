@@ -15,9 +15,11 @@ import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import classes from "./NewTodo.module.css";
 import { v4 as uuidv4 } from "uuid";
+import { images } from "../assets/tasksImages/images";
 
 function NewTodo() {
   const [showAlert, setShowAlert] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.isOpen);
 
@@ -26,13 +28,18 @@ function NewTodo() {
   const dateRef = useRef();
 
   const newTodoHandler = () => {
-    if (inputRef.current.value.trim() !== "" && dateRef.current.value !== "") {
+    if (
+      inputRef.current.value.trim() !== "" &&
+      dateRef.current.value !== "" &&
+      selectedImage !== null
+    ) {
       dispatch(
         todoActions.addToList({
           id: uuidv4(),
           title: inputRef.current.value.trim(),
           description: descriptionRef.current.value.trim(),
           date: dateRef.current.value,
+          image: selectedImage,
           status: "In Process",
         })
       );
@@ -42,9 +49,14 @@ function NewTodo() {
     }
   };
 
+  function handleSelectImage(image) {
+    setSelectedImage(image);
+  }
+
   const handleClose = () => {
     dispatch(modalActions.toggleShowModal());
     setShowAlert(false);
+    setSelectedImage(null);
   };
 
   return (
@@ -77,9 +89,22 @@ function NewTodo() {
             <DesktopDatePicker label="Choose Date" inputRef={dateRef} />
           </DemoItem>
         </LocalizationProvider>
+        <ul className={classes.tasks_images}>
+          {images.map((image) => (
+            <li
+              key={image.alt}
+              onClick={() => handleSelectImage(image)}
+              className={
+                selectedImage === image ? classes.selected_image : undefined
+              }
+            >
+              <img src={image.src} alt={image.alt} />
+            </li>
+          ))}
+        </ul>
         {showAlert && (
           <Alert variant="outlined" severity="error">
-            The Task must have a Title and Date. Please add the missing
+            The Task must have a Title, Date and Image. Please add the missing
             information.
           </Alert>
         )}

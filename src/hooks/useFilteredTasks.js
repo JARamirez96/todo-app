@@ -16,5 +16,13 @@ export const useFilteredTasks = (filter) => {
     }
   });
 
-  return filteredTasks;
+  const statusCounts = tasks.reduce((counts, task) => {
+    counts[task.status] = (counts[task.status] || 0) + 1;
+    return counts;
+  }, {});
+
+  return {
+    filteredTasks,
+    statusCounts,
+  };
 };
