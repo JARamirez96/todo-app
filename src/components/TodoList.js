@@ -14,16 +14,18 @@ function TodoList() {
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("ListOfTodos")) || [];
-    if (storedTasks.length > 0 && list.length === 0) {
+    if (storedTasks.length > 0) {
       dispatch(todoActions.loadTasks(storedTasks));
     }
+  }, [dispatch]);
 
+  useEffect(() => {
     if (list.length > 0) {
       localStorage.setItem("ListOfTodos", JSON.stringify(list));
     } else {
       localStorage.removeItem("ListOfTodos");
     }
-  }, [list, dispatch]);
+  }, [list]);
 
   const { filteredTasks } = useFilteredTasks(filter);
 
