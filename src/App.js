@@ -1,5 +1,5 @@
-import NewTodo from "./components/NewTodo";
-import TodoList from "./components/TodoList";
+import TodoList from "./components/Todos/List";
+import NewTodo from "./components/Todos/NewTodo";
 import Header from "./components/UI/Header";
 import { Box } from "@mui/material";
 

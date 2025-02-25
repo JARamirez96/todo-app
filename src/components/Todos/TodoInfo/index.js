@@ -1,11 +1,12 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import classes from "./TodoInfo.module.css";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { todoActions } from "../store/todos";
-import StatusButton from "./Buttons/StatusButton";
+import { todoActions } from "../../../store/todos";
+import StatusButton from "../../Buttons/StatusButton";
 import { Delete as DeleteIcon } from "@mui/icons-material";
+import Description from "./Description";
 
 const itemVariants = {
   hidden: { opacity: 0, x: 15 },
@@ -14,11 +15,6 @@ const itemVariants = {
 
 function TodoInfo({ id, title, status, date, image, description }) {
   const dispatch = useDispatch();
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const onViewDetails = () => {
-    setIsExpanded((prevState) => !prevState);
-  };
 
   const changeStatusHandler = (status) => {
     dispatch(todoActions.changeStatus({ id, status }));
@@ -107,28 +103,7 @@ function TodoInfo({ id, title, status, date, image, description }) {
             </Box>
           </Box>
         </header>
-        {description !== "" && (
-          <>
-            <Typography
-              align="left"
-              sx={{ marginTop: "10px", cursor: "pointer", width: "9rem" }}
-              onClick={onViewDetails}
-            >
-              Description{" "}
-              <motion.span
-                style={{ display: "inline-block", width: "1rem" }}
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-              >
-                &#9650;
-              </motion.span>
-            </Typography>
-            {isExpanded && (
-              <Typography mt={1} variant="body2" align="justify">
-                {description}
-              </Typography>
-            )}
-          </>
-        )}
+        {description !== "" && <Description description={description} />}
       </Box>
     </motion.li>
   );

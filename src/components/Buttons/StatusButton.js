@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-function StatusButton({ children, color, status, onChangeStatus }) {
+const StatusButton = ({ children, color, status, onChangeStatus }) => {
   const changeTaskStatus = (status) => {
     onChangeStatus(status);
   };
@@ -16,6 +16,6 @@ function StatusButton({ children, color, status, onChangeStatus }) {
       {children}
     </Button>
   );
-}
+};
 
 export default StatusButton;

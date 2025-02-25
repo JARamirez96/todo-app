@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
-import TodoInfo from "./TodoInfo";
-import classes from "./TodoList.module.css";
+import TodoInfo from "../TodoInfo";
+import classes from "./List.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { todoActions } from "../store/todos";
-import { useFilteredTasks } from "../hooks/useFilteredTasks";
+import { todoActions } from "../../../store/todos";
+import { useFilteredTasks } from "../../../hooks/useFilteredTasks";
 import { AnimatePresence, motion } from "framer-motion";
 
 function TodoList() {
